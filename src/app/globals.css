@@ -1,1 +1,24 @@
 @import "tailwindcss";
+
+@theme {
+    --color-sv_red: #E50000;
+    --color-sv_red_dark: #B20000;
+    --color-sv_bg: #0F0F0F;
+    --color-sv_surface: #1A1A1A;
+    --color-sv_border: #262626;
+    --color-sv_muted: #999999;
+    --font-sans: var(--font-manrope);
+}
+
+@layer base {
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        background-color: #0f0f0f;
+        color: #ffffff;
+    }
+}
