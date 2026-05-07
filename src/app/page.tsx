@@ -2,11 +2,10 @@ import HeroSection from "@/components/HeroSection";
 import { getTitles } from "@/lib/api";
 
 const Home = async () => {
-  const movies = await getTitles("MOVIE", 5);
-  console.log(movies);
+  const movies = await getTitles("MOVIE", 36);
   return (
     <div>
-      <HeroSection />
+      <HeroSection movies={movies} />
     </div>
   );
 };

@@ -1,57 +1,57 @@
 // import Image from "next/image";
+import { Title } from "@/lib/api";
+import Image from "next/image";
 import Link from "next/link";
+import { BiCameraMovie } from "react-icons/bi";
 
-const HeroSection = () => {
+interface HeroSectionProps {
+  movies: Title[];
+}
+
+const HeroSection = ({ movies }: HeroSectionProps) => {
   return (
     <section className="relative w-full h-screen overflow-hidden">
       {/* Movie Posters Grid */}
-      {/* <div className="absolute inset-0 grid grid-cols-5 grid-rows-3 gap-2 p-2 opacity-60">
-        {[
-          "https://image.tmdb.org/t/p/w500/1E5baAaEse26fej7uHcjOgEE2t2.jpg",
-          "https://image.tmdb.org/t/p/w500/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg",
-          "https://image.tmdb.org/t/p/w500/rktDFPbfHfUbArZ6OOOKsXcv0Bm.jpg",
-          "https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg",
-          "https://image.tmdb.org/t/p/w500/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg",
-          "https://image.tmdb.org/t/p/w500/Ab8mkHmkYADjU7wQiOkia9BzGvS.jpg",
-          "https://image.tmdb.org/t/p/w500/NNxYkU70HPurnNCSiCjYAmacwm.jpg",
-          "https://image.tmdb.org/t/p/w500/hek3koDUyRQk7FIhPXsa6mT2Zc3.jpg",
-          "https://image.tmdb.org/t/p/w500/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg",
-          "https://image.tmdb.org/t/p/w500/A3ZbZsmsvNGdprRi2lKgGEeVLEH.jpg",
-          "https://image.tmdb.org/t/p/w500/ggFHVNu6YYI5L9pCfOacjizRGt.jpg",
-          "https://image.tmdb.org/t/p/w500/kqjL17yufvn9OVLyXYpvtyrFfak.jpg",
-          "https://image.tmdb.org/t/p/w500/6FfCtAuVAW8XJjZ7eWeLibRLWTw.jpg",
-          "https://image.tmdb.org/t/p/w500/oYuLEt3zVCKq57qu2F8dT7NIa6f.jpg",
-          "https://image.tmdb.org/t/p/w500/vZloFAK7NmvMGKE7VkF5UHaz0I.jpg",
-        ].map((url, i) => (
+      <div className="absolute top-0 left-0 w-full h-[70vh] grid grid-cols-9 grid-rows-4 gap-2 p-2">
+        {movies.slice(0, 36).map((movie, i) => (
           <div
             key={i}
-            className="relative w-full h-full rounded-lg overflow-hidden"
+            className="relative w-full h-full rounded-lg overflow-hidden bg-sv_surface"
           >
-            <Image src={url} alt="movie poster" fill className="object-cover" />
+            {movie.primaryImage?.url ? (
+              <Image
+                src={movie.primaryImage.url}
+                alt={movie.primaryTitle}
+                fill
+                className="object-cover opacity-60"
+              />
+            ) : (
+              <div className="w-full h-full bg-sv_surface" />
+            )}
           </div>
         ))}
-      </div> */}
+      </div>
 
       {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-linear-to-b from-black/60 via-black/50 to-sv_bg" />
+      <div className="absolute inset-0 bg-linear-to-b from-transparent via-black/50 to-sv_bg" />
+
+      {/* Center Logo Watermark */}
+      <div className="absolute inset-0 flex items-start justify-center pt-20 pl-15">
+        <BiCameraMovie size={400} className="text-white/30" />
+      </div>
 
       {/* Center Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
-        {/* Play Icon */}
-        <div className="w-20 h-20 rounded-full border-4 border-white/30 flex items-center justify-center mb-8">
-          <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-            <svg viewBox="0 0 24 24" fill="white" className="w-7 h-7 ml-1">
-              <path d="M8 5v14l11-7z" />
-            </svg>
-          </div>
-        </div>
-
-        <h1 className="text-4xl md:text-6xl font-extrabold mb-4 max-w-3xl leading-tight">
+      <div className="relative z-10 flex flex-col items-center justify-end h-full text-center px-4 pb-28">
+        <h1 className="text-4xl md:text-5xl font-bold mb-4 max-w-4xl leading-tight">
           The Best Streaming Experience
         </h1>
-        <p className="text-white/60 text-sm md:text-base max-w-xl mb-8 leading-relaxed">
+        <p className="text-white/60 text-sm md:text-base max-w-5xl mb-8 leading-relaxed">
           StreamVibe is the best streaming experience for watching your favorite
-          movies and shows on demand, anytime, anywhere.
+          movies and shows on demand, anytime, anywhere. With StreamVibe, you
+          can enjoy a wide variety of content, including the latest
+          blockbusters, classic movies, popular TV shows, and more. You can also
+          create your own watchlists, so you can easily find the content you
+          want to watch.
         </p>
         <Link
           href="/movies"

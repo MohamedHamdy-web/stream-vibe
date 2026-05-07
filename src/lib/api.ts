@@ -25,12 +25,26 @@ export async function getTitles(
   limit = 20,
 ): Promise<Title[]> {
   const res = await fetch(
-    `${BASE_URL}/titles?types=${type}&sortBy=SORT_BY_POPULARITY&sortOrder=DESC&minVoteCount=100000&pageSize=${limit}`,
+    `${BASE_URL}/titles?types=${type}&sortBy=SORT_BY_POPULARITY&sortOrder=DESC&minVoteCount=100000`,
     { next: { revalidate: 3600 } },
   );
   if (!res.ok) throw new Error("Failed to fetch titles");
   const data = await res.json();
-  return data.titles ?? [];
+
+  let titles: Title[] = data.titles ?? [];
+
+  // fetch next page if we need more
+  if (titles.length < limit && data.nextPageToken) {
+    const res2 = await fetch(
+      `${BASE_URL}/titles?types=${type}&sortBy=SORT_BY_POPULARITY&sortOrder=DESC&minVoteCount=100000&pageToken=${data.nextPageToken}`,
+      { next: { revalidate: 3600 } },
+    );
+    const data2 = await res2.json();
+    titles = [...titles, ...(data2.titles ?? [])];
+  }
+
+  // only return movies that have poster images
+  return titles.filter((t) => t.primaryImage?.url).slice(0, limit);
 }
 
 export async function getTitle(titleId: string): Promise<Title> {
